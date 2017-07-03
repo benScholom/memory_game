@@ -1,0 +1,10 @@
+body {
+	background-image:url("Memory_game_images/bg.jpg");
+	background-position:cover;
+}
+
+body div.text-center.intro {
+	color:green;
+	font-family: 'Shadows Into Light', cursive
+}
+//specifity to override properties from bootstrap
