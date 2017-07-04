@@ -4,7 +4,18 @@ body {
 }
 
 body div.text-center.intro {
-	color:green;
+	color:green;
+
 	font-family: 'Shadows Into Light', cursive
 }
-//specifity to override properties from bootstrap
+/*specifity to override properties from bootstrap*/
+.col-xs-3 {
+	height:80px;
+	margin-left:6%;
+}
+
+.row {
+	margin-top:2%;
+}
+/* added margins to bootstrap classes to separate so card background image would 
+not have to directly inserted into the columns*/
