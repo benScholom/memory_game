@@ -9,13 +9,14 @@ body div.text-center.intro {
 	font-family: 'Shadows Into Light', cursive
 }
 /*specifity to override properties from bootstrap*/
-.col-xs-3 {
-	height:80px;
-	margin-left:6%;
+.col-xs-4 {
+	height:120px;
+	background-origin:content-box;
+	background-repeat: no-repeat;
 }
 
 .row {
-	margin-top:2%;
+	padding-top:15px;
 }
-/* added margins to bootstrap classes to separate so card background image would 
-not have to directly inserted into the columns*/
+/* added padding and background-origin to bootstrap classes to separate so card background image would not take up 
+all the space and consequently would not have to directly inserted into the columns*/
