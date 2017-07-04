@@ -8,6 +8,20 @@ body div.text-center.intro {
 
 	font-family: 'Shadows Into Light', cursive
 }
+
+#correct {
+	color:blue;
+	font-family: 'Shadows Into Light', cursive;
+}
+#wrong {
+	color:red;
+	font-family: 'Shadows Into Light', cursive;
+}
+#final {
+	font-weight:bold;
+	color:green;
+	font-family: 'Shadows Into Light', cursive;
+}
 /*specifity to override properties from bootstrap*/
 .col-xs-4 {
 	height:120px;

@@ -1,5 +1,11 @@
 memoryGame = {};
 //the one namespace to rule them all
+memoryGame.Easy = false;
+memoryGame.Medium = false;
+memoryGame.Hard = false;
+memoryGame.clicked = 0;
+memoryGame.stop = false;
+//difficulty levels
 
 memoryGame.imagesEasy = ["Memory_game_images/1.jpg", "Memory_game_images/1.jpg",  
 					"Memory_game_images/2.jpg", "Memory_game_images/2.jpg", 
@@ -49,6 +55,10 @@ memoryGame.random = function(array) {
 memoryGame.dealCards = function() {
 	var table = document.getElementById("game");
 	//creating game table and function for distributing cards
+	memoryGame.correct = 0;
+	memoryGame.wrong = 0;
+	score.innerHTML = "You have found " + memoryGame.correct + " matches";
+	fail.innerHTML = "You have made " + memoryGame.wrong + " errors";
 
 	for (var i = 0; i < 4; i++) {
 		var rows = document.createElement("div");
@@ -70,13 +80,14 @@ memoryGame.dealCards = function() {
 };
 
 
-
-memoryGame.clicked = 0;
 memoryGame.correct = 0;
 memoryGame.wrong = 0;
-memoryGame.stop = false;
 var choice1;
 var choice2;
+var score = document.getElementById("correct");
+score.innerHTML = "You have found " + memoryGame.correct + " matches";
+var fail = document.getElementById("wrong");
+fail.innerHTML = "You have made " + memoryGame.wrong + " errors";
 //seting game logic variables include card click tracker, choice variables, pause variable and score variables
 memoryGame.reveal = function(event) {
 	if(memoryGame.stop == false) {	
@@ -93,13 +104,19 @@ memoryGame.reveal = function(event) {
 	//if no card has been clicked (is face up), this the card chosen is choice 1
 	else {
 		choice2 = choice;
-		if (choice1.style.backgroundImage == choice2.style.backgroundImage) {
+		if (choice1.style.backgroundImage == choice2.style.backgroundImage && choice1.id != choice2.id) {
 			memoryGame.correct++;
 			memoryGame.clicked = 0;
+			score.innerHTML = "You have found " + memoryGame.correct + " matches";
 		}
 		// if there is one face up card, this click is the second card. the images displayed are compared
 		// if the images are the same, we have a match and the cards will stay face up and the tracker goes to zero
 		// player gets a point for the match
+		else if (choice1.style.backgroundImage == choice2.style.backgroundImage && choice1.id == choice2.id) {
+			memoryGame.clicked = 1;
+			choice2;
+		}
+		//little brother test - ensure that no one clicks the exact same card twice and screws with the system
 		else {
 			memoryGame.stop = true;
 			//pause so you cant click cards while the 2 you already selected are displayed
@@ -108,13 +125,15 @@ memoryGame.reveal = function(event) {
 			memoryGame.wrong++;
 			choice1.style.backgroundImage = "url('Memory_game_images/texture.jpg')";
 			choice2.style.backgroundImage = "url('Memory_game_images/texture.jpg')";
+			fail.innerHTML = "You have made " + memoryGame.wrong + " errors";
 			memoryGame.stop = false;
 			//restart the game
-		}, 1250);
+		}, 750);
 		// if the images are not the same, the cards will remain face up for a short time before going back to background
 		// player gets a failure point. this is not a good thing.
 		// the click tracker resets
 		}
+
 	}
 }
 };
