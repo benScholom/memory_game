@@ -1,8 +1,6 @@
 memoryGame = {};
 //the one namespace to rule them all
-memoryGame.Easy = false;
-memoryGame.Medium = false;
-memoryGame.Hard = false;
+memoryGame.dif;
 memoryGame.clicked = 0;
 memoryGame.stop = false;
 //difficulty levels
@@ -50,16 +48,17 @@ memoryGame.random = function(array) {
 	}
 	return array;
 };
-//algorithm for rancomizing an array, to be used with the image array
+//algorithm for randomizing an array, to be used with the image array
 
-memoryGame.dealCards = function() {
+memoryGame.dealCards = function(difficulty) {
 	var table = document.getElementById("game");
 	//creating game table and function for distributing cards
 	memoryGame.correct = 0;
 	memoryGame.wrong = 0;
 	score.innerHTML = "You have found " + memoryGame.correct + " matches";
 	fail.innerHTML = "You have made " + memoryGame.wrong + " errors";
-
+	if(difficulty == "easy") {
+		memoryGame.dif = "easy";
 	for (var i = 0; i < 4; i++) {
 		var rows = document.createElement("div");
 		rows.className ="row";
@@ -77,6 +76,47 @@ memoryGame.dealCards = function() {
 			table.appendChild(rows);
 			//adding the rows to the game table
 	}
+}
+	if(difficulty == "medium") {
+		memoryGame.dif = "medium";
+	for (var i = 0; i < 6; i++) {
+		var rows = document.createElement("div");
+		rows.className ="row";
+		//creating the rows that will hold cards
+			for (var j = 0; j < 3; j++) {
+				var card = document.createElement("div");
+				card.className ="col-xs-4";
+				card.id =(6*j+i);
+				card.style.backgroundImage="url('Memory_game_images/texture.jpg')";
+				rows.appendChild(card);
+				card.addEventListener("click", memoryGame.reveal);
+				//creating the cards and assigning them id's and aligning them with bootstrap. also adding them to the rows
+				// assigning event listener to trigger matching process
+			}
+			table.appendChild(rows);
+			//adding the rows to the game table
+}
+}
+	if(difficulty == "hard") {
+		memoryGame.dif = "hard";
+	for (var i = 0; i < 8; i++) {
+		var rows = document.createElement("div");
+		rows.className ="row";
+		//creating the rows that will hold cards
+			for (var j = 0; j < 3; j++) {
+				var card = document.createElement("div");
+				card.className ="col-xs-4";
+				card.id =(8*j+i);
+				card.style.backgroundImage="url('Memory_game_images/texture.jpg')";
+				rows.appendChild(card);
+				card.addEventListener("click", memoryGame.reveal);
+				//creating the cards and assigning them id's and aligning them with bootstrap. also adding them to the rows
+				// assigning event listener to trigger matching process
+			}
+			table.appendChild(rows);
+			//adding the rows to the game table
+}
+}
 };
 
 
@@ -93,7 +133,7 @@ memoryGame.reveal = function(event) {
 	if(memoryGame.stop == false) {	
 	var choice = event.target;
 	var choiceId = choice.id;
-	choice.style.backgroundImage = "url("+memoryGame.imagesEasy[choiceId]+")";
+	choice.style.backgroundImage = "url("+memoryGame.images[choiceId]+")";
 	choice.style.backgroundOrigin = "content-box";
 	choice.style.backgroundRepeat = "no-repeat";
 	//event listener linked to clicking a card that changes background image to one of the animal pictures
@@ -135,6 +175,10 @@ memoryGame.reveal = function(event) {
 		}
 
 	}
+	if (memoryGame.correct == (memoryGame.images.length)/2) {
+		var announce = document.getElementById("final");
+		announce.innerHTML = "Congratulations, you completed the game in " + (memoryGame.correct + memoryGame.wrong) + " total attempts!";
+	}
 }
 };
 
@@ -145,10 +189,37 @@ memoryGame.startEasy = function() {
 		table.removeChild(table.firstChild);
 		//removing the cards previous game if existing
 	}
-	memoryGame.dealCards();
+	memoryGame.dealCards("easy");
 	//dealing new cards for a new game
-	memoryGame.imagesEasy = memoryGame.random(memoryGame.imagesEasy);
+	memoryGame.images = memoryGame.random(memoryGame.imagesEasy);
 	//randomizing images of cards
 	
 }
+// easy difficulty
 
+memoryGame.startMedium = function() {
+	var table = document.getElementById("game");
+	while (table.firstChild) {
+		table.removeChild(table.firstChild);
+		//removing the cards previous game if existing
+	}
+	memoryGame.dealCards("medium");
+	//dealing new cards for a new game
+	memoryGame.images = memoryGame.random(memoryGame.imagesMedium);
+	//randomizing images of cards
+	
+}
+//medium difficulty
+memoryGame.startHard = function() {
+	var table = document.getElementById("game");
+	while (table.firstChild) {
+		table.removeChild(table.firstChild);
+		//removing the cards previous game if existing
+	}
+	memoryGame.dealCards("hard");
+	//dealing new cards for a new game
+	memoryGame.images = memoryGame.random(memoryGame.imagesHard);
+	//randomizing images of cards
+	
+}
+//hard difficulty
