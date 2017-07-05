@@ -119,9 +119,25 @@ memoryGame.dealCards = function(difficulty) {
 }
 };
 
-
+memoryGame.highscore = [];
 memoryGame.correct = 0;
 memoryGame.wrong = 0;
+memoryGame.bestScore = 100;
+		var high = document.getElementById("highscore");
+
+memoryGame.getBest = function() {
+		memoryGame.highscore = localStorage;
+		//highscore takes from localstorage
+		Object.keys(memoryGame.highscore).forEach(function(key) {
+			if( parseInt(memoryGame.highscore[key]) < memoryGame.bestScore){
+				memoryGame.bestScore = memoryGame.highscore[key]
+			}
+		});
+		//search through obejct elements and return numbers
+		high.innerHTML = "score to beat: " + memoryGame.bestScore;
+
+}
+memoryGame.getBest();
 var choice1;
 var choice2;
 var score = document.getElementById("correct");
@@ -178,6 +194,11 @@ memoryGame.reveal = function(event) {
 	if (memoryGame.correct == (memoryGame.images.length)/2) {
 		var announce = document.getElementById("final");
 		announce.innerHTML = "Congratulations, you completed the game in " + (memoryGame.correct + memoryGame.wrong) + " total attempts!";
+		var userName = prompt("please enter your name: ");
+		var userScore = parseInt(memoryGame.correct + memoryGame.wrong);
+		console.log(userScore);
+		localStorage.setItem(JSON.stringify(userName), JSON.stringify(userScore));
+		memoryGame.getBest();
 	}
 }
 };
